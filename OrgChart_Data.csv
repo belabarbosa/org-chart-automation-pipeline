@@ -1,0 +1,96 @@
+ID,Name,Title,ManagerID,OfficeProgram,Description,TopGroup,SubGroup,Company,IsPartTime,IsRetiredPriorAgentOfficer,IsHiredWaitingBI,IsDriverTrainer,IsOpenPosition,IsRemote,SortOrder
+1,Frankie Irwin,Technical PM,,Leadership,Program leadership,,,PRIME CONTRACTOR,1,0,0,0,0,0,1
+2,Val Guerra,"Program Manager, Deputy",1,Leadership,Program leadership,,,PRIME CONTRACTOR,0,1,0,0,0,0,2
+3,Wren Neri,Technical PM,2,Management,Contract support team,,,PRIME CONTRACTOR,0,0,0,0,0,0,1
+4,Alex Yancey,Financial Analyst,2,Management,Contract support team,,,PRIME CONTRACTOR,0,0,0,0,0,1,2
+5,Dakota Holt,Technical Writer,2,Management,Contract support team,,,PRIME CONTRACTOR,0,0,0,0,0,0,3
+6,Marlow Esparza,SME - Cybersecurity,999,,,,,PRIME CONTRACTOR,0,0,0,0,0,0,1
+7,Finley Larkin,SME - Data Governance,999,,,,,PRIME CONTRACTOR,1,0,0,0,0,1,2
+8,Taylor Zamora,SME - Cloud Architecture,999,,,,,PRIME CONTRACTOR,0,0,0,0,0,0,3
+9,Jesse Quinlan,SME - Process Improvement,999,,,,,Silverline Advisory,0,0,0,0,0,1,4
+10,Frankie Trent,Task Lead,2,Mobile Support Unit (MSU),Field mobile support operations,Operations Group,Field Support,PRIME CONTRACTOR,0,0,0,0,0,0,1
+11,Cameron Abbott,Analyst,10,Mobile Support Unit (MSU),,,,PRIME CONTRACTOR,0,0,0,0,0,1,2
+12,Greer Esparza,Senior Analyst,10,Mobile Support Unit (MSU),,,,BrightPath Consulting,0,0,0,0,0,1,3
+13,Finley Poole,Senior Analyst,10,Mobile Support Unit (MSU),,,,PRIME CONTRACTOR,0,0,0,0,0,0,4
+14,Jesse Cobb,Analyst,10,Mobile Support Unit (MSU),,,,PRIME CONTRACTOR,0,0,0,0,0,0,5
+15,Jesse Vance,Analyst,10,Mobile Support Unit (MSU),,,,Silverline Advisory,0,0,0,0,0,1,6
+16,Marlow Vance,Analyst,10,Mobile Support Unit (MSU),,,,PRIME CONTRACTOR,0,0,0,0,0,0,7
+17,Avery Young,Analyst,10,Mobile Support Unit (MSU),,,,PRIME CONTRACTOR,0,0,0,1,0,0,8
+18,Jamie Young,Analyst,10,Mobile Support Unit (MSU),,,,PRIME CONTRACTOR,0,0,0,0,0,0,9
+19,Marlow Gable,Analyst,10,Mobile Support Unit (MSU),,,,PRIME CONTRACTOR,0,0,0,0,0,0,10
+20,Hayden Iverson,Analyst,10,Mobile Support Unit (MSU),,,,PRIME CONTRACTOR,0,0,0,0,0,0,11
+21,Jules Reyna,Analyst,10,Mobile Support Unit (MSU),,,,PRIME CONTRACTOR,0,0,0,0,0,0,12
+22,Charlie Kowalski,Task Lead,2,Equipment Tracking (EQT),Equipment tracking and maintenance,Operations Group,Field Support,PRIME CONTRACTOR,0,0,0,0,0,1,1
+23,Dakota Frost,Analyst,22,Equipment Tracking (EQT),,,,PRIME CONTRACTOR,0,0,0,0,0,0,2
+24,Emerson Faulkner,Senior Analyst,22,Equipment Tracking (EQT),,,,PRIME CONTRACTOR,0,0,0,0,0,0,3
+25,Greer Holt,Analyst,22,Equipment Tracking (EQT),,,,Silverline Advisory,0,0,0,0,0,1,4
+26,Quinn Stein,Senior Analyst,22,Equipment Tracking (EQT),,,,PRIME CONTRACTOR,0,0,0,0,0,1,5
+27,Morgan Yancey,Analyst,22,Equipment Tracking (EQT),,,,PRIME CONTRACTOR,0,0,0,0,0,0,6
+28,Alex Zamora,Senior Analyst,22,Equipment Tracking (EQT),,,,PRIME CONTRACTOR,0,0,0,0,0,0,7
+29,Avery Neri,Senior Analyst,22,Equipment Tracking (EQT),,,,PRIME CONTRACTOR,0,0,0,0,0,0,8
+30,Sage Iverson,Senior Analyst,22,Equipment Tracking (EQT),,,,Silverline Advisory,0,0,0,0,0,0,9
+31,Jamie Larkin,Task Lead,2,Supply Chain Portal (SCP),Supply chain coordination portal,Operations Group,Logistics,PRIME CONTRACTOR,0,0,0,0,0,0,1
+32,Hayden Orta,Analyst,31,Supply Chain Portal (SCP),,,,PRIME CONTRACTOR,0,0,0,0,0,0,2
+33,Alex Esparza,Analyst,31,Supply Chain Portal (SCP),,,,PRIME CONTRACTOR,0,0,0,0,0,0,3
+34,Casey Quist,Analyst,31,Supply Chain Portal (SCP),,,,PRIME CONTRACTOR,0,0,0,0,0,1,4
+35,Indigo Kowalski,Analyst,31,Supply Chain Portal (SCP),,,,PRIME CONTRACTOR,0,0,0,0,0,1,5
+36,Kendall Tovar,Analyst,31,Supply Chain Portal (SCP),,,,PRIME CONTRACTOR,0,0,0,0,0,0,6
+37,Morgan Pruitt,Analyst,31,Supply Chain Portal (SCP),,,,PRIME CONTRACTOR,0,1,0,0,0,0,7
+38,Wren Ulrich,Senior Analyst,31,Supply Chain Portal (SCP),,,,PRIME CONTRACTOR,1,0,0,0,0,0,8
+39,Finley Monroe,Task Lead,2,Customer Portal Redesign (CPR),Customer-facing portal redesign,Technology Group,Software Engineering,PRIME CONTRACTOR,0,0,1,0,0,0,1
+40,Elliot Orta,Analyst,39,Customer Portal Redesign (CPR),,,,PRIME CONTRACTOR,0,0,0,0,0,0,2
+41,Emerson Lowe,Analyst,39,Customer Portal Redesign (CPR),,,,PRIME CONTRACTOR,0,0,1,0,0,0,3
+42,Indigo Whitfield,Senior Analyst,39,Customer Portal Redesign (CPR),,,,PRIME CONTRACTOR,0,0,0,0,0,0,4
+43,Reese Esparza,Analyst,39,Customer Portal Redesign (CPR),,,,PRIME CONTRACTOR,0,0,0,0,0,0,5
+44,Casey Zeller,Analyst,39,Customer Portal Redesign (CPR),,,,PRIME CONTRACTOR,0,0,0,0,0,0,6
+45,Hayden Mills,Analyst,39,Customer Portal Redesign (CPR),,,,PRIME CONTRACTOR,0,1,0,0,0,0,7
+46,Devon Hendrix,Senior Analyst,39,Customer Portal Redesign (CPR),,,,Silverline Advisory,0,1,0,0,0,0,8
+47,Finley Cobb,Analyst,39,Customer Portal Redesign (CPR),,,,Silverline Advisory,0,0,0,0,0,0,9
+48,Indigo Brennan,Analyst,39,Customer Portal Redesign (CPR),,,,PRIME CONTRACTOR,0,0,0,0,0,0,10
+49,Eden Larkin,Analyst,39,Customer Portal Redesign (CPR),,,,PRIME CONTRACTOR,0,1,0,0,0,0,11
+50,Greer Voss,Task Lead,2,Internal Tools Platform (ITP),Internal tooling platform,Technology Group,Software Engineering,PRIME CONTRACTOR,0,0,0,0,0,0,1
+51,Indigo Guerra,Analyst,50,Internal Tools Platform (ITP),,,,PRIME CONTRACTOR,0,0,0,0,0,0,2
+52,Rowan Neri,Analyst,50,Internal Tools Platform (ITP),,,,BrightPath Consulting,0,0,0,0,0,1,3
+53,Lior Trent,Analyst,50,Internal Tools Platform (ITP),,,,PRIME CONTRACTOR,0,0,0,0,0,0,4
+54,Presley Cobb,Analyst,50,Internal Tools Platform (ITP),,,,PRIME CONTRACTOR,0,0,0,0,0,0,5
+55,Noel Jara,Analyst,50,Internal Tools Platform (ITP),,,,PRIME CONTRACTOR,0,0,0,0,0,0,6
+56,Wren Dade,Senior Analyst,50,Internal Tools Platform (ITP),,,,PRIME CONTRACTOR,0,0,0,0,0,0,7
+57,Frankie Quist,Senior Analyst,50,Internal Tools Platform (ITP),,,,PRIME CONTRACTOR,1,0,0,0,0,1,8
+58,Avery Poole,Analyst,50,Internal Tools Platform (ITP),,,,PRIME CONTRACTOR,0,0,0,0,0,0,9
+59,Skyler Brennan,Analyst,50,Internal Tools Platform (ITP),,,,PRIME CONTRACTOR,0,0,1,0,0,0,10
+60,Oakley Bishop,Task Lead,2,Reporting Dashboard (RPD),Enterprise reporting dashboard,Technology Group,Data Analytics,PRIME CONTRACTOR,0,0,0,0,0,0,1
+61,Remy Poole,Analyst,60,Reporting Dashboard (RPD),,,,PRIME CONTRACTOR,0,0,0,0,0,0,2
+62,Drew Ochoa,Senior Analyst,60,Reporting Dashboard (RPD),,,,PRIME CONTRACTOR,0,0,0,0,0,0,3
+63,Quinn Ellis,Senior Analyst,60,Reporting Dashboard (RPD),,,,PRIME CONTRACTOR,0,0,0,0,0,0,4
+64,Hayden Guerra,Senior Analyst,60,Reporting Dashboard (RPD),,,,PRIME CONTRACTOR,0,1,0,0,0,0,5
+65,Onyx Carr,Analyst,60,Reporting Dashboard (RPD),,,,PRIME CONTRACTOR,0,1,0,0,0,0,6
+66,Noel Trent,Analyst,60,Reporting Dashboard (RPD),,,,PRIME CONTRACTOR,0,0,0,0,0,0,7
+67,Parker Holt,Analyst,60,Reporting Dashboard (RPD),,,,PRIME CONTRACTOR,0,0,0,0,0,0,8
+68,Casey Monroe,Analyst,60,Reporting Dashboard (RPD),,,,PRIME CONTRACTOR,0,0,0,0,0,0,9
+69,Sam Xu,Task Lead,2,Client Onboarding (CLO),New client onboarding workflow,Client Services Group,Account Management,PRIME CONTRACTOR,0,0,0,0,1,0,1
+70,Remy Holt,Senior Analyst,69,Client Onboarding (CLO),,,,PRIME CONTRACTOR,0,0,0,0,0,0,2
+71,Eden Jonas,Analyst,69,Client Onboarding (CLO),,,,PRIME CONTRACTOR,0,0,0,0,0,1,3
+72,Kendall Dade,Analyst,69,Client Onboarding (CLO),,,,PRIME CONTRACTOR,0,0,0,1,0,0,4
+73,Remy Orta,Analyst,69,Client Onboarding (CLO),,,,PRIME CONTRACTOR,0,0,0,0,0,0,5
+74,Morgan Quist,Analyst,69,Client Onboarding (CLO),,,,PRIME CONTRACTOR,0,0,0,0,0,0,6
+75,Morgan Tovar,Analyst,69,Client Onboarding (CLO),,,,PRIME CONTRACTOR,0,0,0,0,0,0,7
+76,Nico Kowalski,Senior Analyst,69,Client Onboarding (CLO),,,,PRIME CONTRACTOR,0,0,0,0,0,0,8
+77,Nico Jonas,Analyst,69,Client Onboarding (CLO),,,,PRIME CONTRACTOR,0,0,0,0,0,0,9
+78,Taylor Neri,Analyst,69,Client Onboarding (CLO),,,,PRIME CONTRACTOR,0,0,0,0,1,0,10
+79,Riley Kowalski,Task Lead,2,Renewal Tracking (RNT),Contract renewal tracking,Client Services Group,Account Management,PRIME CONTRACTOR,0,0,0,0,0,1,1
+80,Blair Tovar,Analyst,79,Renewal Tracking (RNT),,,,PRIME CONTRACTOR,0,0,0,0,0,0,2
+81,Jules Gable,Analyst,79,Renewal Tracking (RNT),,,,Silverline Advisory,0,0,0,0,0,0,3
+82,Jamie Kowalski,Analyst,79,Renewal Tracking (RNT),,,,PRIME CONTRACTOR,0,0,0,0,0,1,4
+83,Parker Monroe,Senior Analyst,79,Renewal Tracking (RNT),,,,PRIME CONTRACTOR,0,0,0,0,0,1,5
+84,Frankie Orta,Analyst,79,Renewal Tracking (RNT),,,,PRIME CONTRACTOR,0,0,0,0,0,0,6
+85,Logan Duran,Senior Analyst,79,Renewal Tracking (RNT),,,,PRIME CONTRACTOR,0,0,0,0,0,1,7
+86,Lane Irwin,Analyst,79,Renewal Tracking (RNT),,,,PRIME CONTRACTOR,0,0,0,0,0,0,8
+87,Parker Novak,Task Lead,2,Market Research Initiative (MRI),Market research and planning,Strategy Group,Business Planning,PRIME CONTRACTOR,0,0,0,0,0,0,1
+88,Kendall Hendrix,Senior Analyst,87,Market Research Initiative (MRI),,,,PRIME CONTRACTOR,0,0,0,0,0,0,2
+89,Morgan Poole,Analyst,87,Market Research Initiative (MRI),,,,PRIME CONTRACTOR,0,0,0,0,0,1,3
+90,Blair Duran,Analyst,87,Market Research Initiative (MRI),,,,PRIME CONTRACTOR,0,0,0,0,0,0,4
+91,Frankie Gable,Senior Analyst,87,Market Research Initiative (MRI),,,,PRIME CONTRACTOR,0,0,0,0,0,0,5
+92,Kris Gable,Senior Analyst,87,Market Research Initiative (MRI),,,,PRIME CONTRACTOR,0,0,0,0,0,0,6
+93,Jamie Zeller,Analyst,87,Market Research Initiative (MRI),,,,PRIME CONTRACTOR,0,0,0,0,0,0,7
+94,Tatum Young,Analyst,87,Market Research Initiative (MRI),,,,PRIME CONTRACTOR,0,0,0,0,0,0,8
+95,Micah Trent,Analyst,87,Market Research Initiative (MRI),,,,PRIME CONTRACTOR,1,0,0,0,0,0,9
