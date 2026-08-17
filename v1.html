@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Org Roster</title>
+<style>
+  :root {
+    --prime-bg: #EEF1F6;
+    --prime-border: #C7CEDB;
+    --sub-bg: #FDEEDC;
+    --sub-border: #E8B778;
+    --header-bg: #22314F;
+    --header-text: #FFFFFF;
+    --ink: #1F2430;
+    --muted: #6B7280;
+    --page-bg: #F7F8FA;
+    --waiting-bi: #2563EB;
+    --open-position: #E4572E;
+    --remote: #0D9488;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px;
+    background: var(--page-bg);
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--ink);
+  }
+  h1 {
+    font-size: 20px;
+    margin: 0 0 4px 0;
+    letter-spacing: 0.02em;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .last-updated {
+    color: var(--muted);
+    font-size: 11px;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+  .leadership-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .lead-card {
+    background: var(--prime-bg);
+    border: 1px solid var(--prime-border);
+    border-radius: 4px;
+    padding: 8px 14px;
+    min-width: 150px;
+  }
+  .lead-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    font-weight: bold;
+  }
+  .lead-name {
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 2px;
+  }
+  .titled-group {
+    margin-bottom: 24px;
+    background: #FFFFFF;
+    border: 1px solid #DDD8D2;
+    border-radius: 6px;
+    overflow: hidden;
+    width: fit-content;
+  }
+  .titled-group-title {
+    background: var(--header-bg);
+    color: var(--header-text);
+    font-size: 12.5px;
+    font-weight: bold;
+    letter-spacing: 0.03em;
+    padding: 8px 14px;
+  }
+  .titled-group-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px;
+  }
+  .board {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+  }
+  .office-column {
+    background: #FFFFFF;
+    border: 1px solid #DDD8D2;
+    border-radius: 6px;
+    width: 200px;
+    flex: 0 0 200px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .office-column-wide {
+    width: 380px;
+    flex: 0 0 380px;
+  }
+  .office-header {
+    background: var(--header-bg);
+    color: var(--header-text);
+    padding: 10px 12px;
+  }
+  .office-header-top {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 4px;
+  }
+  .office-count-badge {
+    background: #FFFFFF;
+    font-size: 9.5px;
+    font-weight: bold;
+    padding: 1px 5px;
+    border-radius: 3px;
+    line-height: 1.4;
+  }
+  .count-prime {
+    color: var(--muted);
+  }
+  .count-sub {
+    color: var(--sub-border);
+  }
+  .office-title {
+    font-size: 12.5px;
+    font-weight: bold;
+    line-height: 1.25;
+  }
+  .office-desc {
+    font-size: 10px;
+    opacity: 0.85;
+    margin-top: 3px;
+    line-height: 1.3;
+  }
+  .top-group {
+    background: #FFFFFF;
+    border: 1px solid #C9C4BE;
+    border-radius: 6px;
+    overflow: hidden;
+    flex: 0 0 auto;
+  }
+  .top-group-header {
+    background: #8C8C8C;
+    color: #FFFFFF;
+    font-size: 12.5px;
+    font-weight: bold;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+  }
+  .top-group-header .group-title {
+    text-align: center;
+  }
+  .top-group-header .group-count-badge {
+    position: absolute;
+    right: 12px;
+  }
+  .top-group-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+  }
+  .sub-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .sub-group-header {
+    background: #ADADAD;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+  }
+  .sub-group-header .group-title {
+    text-align: center;
+  }
+  .sub-group-header .group-count-badge {
+    position: absolute;
+    right: 8px;
+  }
+  .group-count-badge {
+    background: #FFFFFF;
+    font-size: 9.5px;
+    font-weight: bold;
+    padding: 1px 5px;
+    border-radius: 3px;
+    line-height: 1.4;
+  }
+  .group-filterable {
+    cursor: pointer;
+    transition: filter 0.15s, outline 0.15s;
+  }
+  .group-filterable:hover {
+    filter: brightness(1.12);
+  }
+  .group-filterable.active {
+    outline: 2px solid var(--remote);
+    outline-offset: -2px;
+  }
+  .sub-group-columns {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .office-count {
+    font-size: 10px;
+    color: var(--muted);
+    padding: 6px 12px 0 12px;
+  }
+  .office-list {
+    padding: 6px 8px 10px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 640px;
+    overflow-y: auto;
+  }
+  .office-list.two-col {
+    display: block;
+    column-count: 2;
+    column-gap: 10px;
+    max-height: none;
+    overflow: visible;
+  }
+  .office-list.two-col .person {
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    margin-bottom: 6px;
+  }
+  .person {
+    background: var(--prime-bg);
+    border: 1px solid var(--prime-border);
+    border-radius: 4px;
+    padding: 6px 8px;
+  }
+  .person.subcontractor {
+    background: var(--sub-bg);
+    border-color: var(--sub-border);
+  }
+  .person-main {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+  }
+  .person-name {
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .person.waiting-bi .person-name {
+    color: var(--waiting-bi);
+  }
+  .person.open-position .person-name {
+    color: var(--open-position);
+  }
+  .person-role {
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .company-name {
+    font-size: 9.5px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .driver-trainer {
+    font-size: 9.5px;
+    color: var(--muted);
+    font-weight: bold;
+    margin-top: 2px;
+  }
+  .tag {
+    font-size: 11px;
+    font-weight: bold;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.15);
+    color: var(--ink);
+  }
+  .tag.remote {
+    background: var(--remote);
+    border-color: var(--remote);
+    color: #FFFFFF;
+  }
+  .legend {
+    margin-top: 0;
+    margin-bottom: 20px;
+    display: block;
+    background: #FFFFFF;
+    border: 1px solid #DDD8D2;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 11px;
+    width: fit-content;
+  }
+  .legend-item {
+    display: inline-block;
+    margin-right: 24px;
+    white-space: nowrap;
+  }
+  .legend-item .swatch {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  .legend-count {
+    color: var(--muted);
+    font-weight: normal;
+  }
+  .legend-item.filterable {
+    cursor: pointer;
+    padding: 3px 6px;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+  .legend-item.filterable:hover {
+    background: #F0EDE9;
+  }
+  .legend-item.filterable.active {
+    background: #FDECEA;
+    outline: 1px solid var(--open-position);
+  }
+  .legend-clear {
+    color: var(--muted);
+    font-style: italic;
+  }
+  .person {
+    transition: opacity 0.15s;
+  }
+  .person.dimmed {
+    opacity: 0.15;
+  }
+  .swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+  /* Scrollbar tidy-up */
+  .office-list::-webkit-scrollbar { width: 6px; }
+  .office-list::-webkit-scrollbar-thumb { background: #C9C4BE; border-radius: 3px; }
+
+  .sub-summary {
+    margin-top: 0;
+    margin-bottom: 20px;
+    background: #FFFFFF;
+    border: 1px solid #DDD8D2;
+    border-radius: 6px;
+    padding: 14px 16px;
+    width: fit-content;
+    min-width: 220px;
+  }
+  .sub-summary-title {
+    font-size: 12.5px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .sub-summary-table {
+    border-collapse: separate;
+    border-spacing: 8px 0;
+    margin-left: -8px;
+  }
+  .sub-summary-table th {
+    background: var(--sub-bg);
+    border: 1px solid var(--sub-border);
+    border-radius: 4px 4px 0 0;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--ink);
+    white-space: nowrap;
+    border-bottom: none;
+  }
+  .sub-summary-table td {
+    background: var(--sub-bg);
+    border: 1px solid var(--sub-border);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    padding: 4px 12px 6px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--ink);
+    text-align: center;
+  }
+  .sme-summary {
+    margin-top: 18px;
+    background: #FFFFFF;
+    border: 1px solid #DDD8D2;
+    border-radius: 6px;
+    padding: 14px 16px;
+    width: fit-content;
+    max-width: 100%;
+  }
+  .sme-summary-title {
+    font-size: 12.5px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .sme-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 240px;
+  }
+  .sme-list .person {
+    width: auto;
+  }
+</style>
+</head>
+<body>
+
+<h1>Company Roster</h1>
+<div class="subtitle">9 offices &middot; 86 people &middot; generated from OrgData</div>
+<div class="last-updated">Last updated: August 17, 2026 at 09:08 PM</div>
+
+<div class="sub-summary">
+  <div class="sub-summary-title">Subcontractors Team (9)</div>
+  <table class="sub-summary-table">
+    <thead>
+      <tr>
+      <th>Silverline Advisory</th>
+      <th>BrightPath Consulting</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      <td>7</td>
+      <td>2</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="titled-group">
+  <div class="titled-group-title">Management</div>
+  <div class="titled-group-row">
+    <div class="lead-card">
+      <div class="lead-title">Technical PM</div>
+      <div class="lead-name">Frankie Irwin PT</div>
+    </div>
+    <div class="lead-card">
+      <div class="lead-title">Technical PM</div>
+      <div class="lead-name">Wren Neri</div>
+    </div>
+    <div class="lead-card">
+      <div class="lead-title">Program Manager, Deputy</div>
+      <div class="lead-name">Val Guerra</div>
+    </div>
+    <div class="lead-card">
+      <div class="lead-title">Financial Analyst</div>
+      <div class="lead-name">Alex Yancey</div>
+    </div>
+    <div class="lead-card">
+      <div class="lead-title">Technical Writer</div>
+      <div class="lead-name">Dakota Holt</div>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item filterable" data-filter-key="prime" onclick="applyFilter('prime', this)"><span class="swatch" style="background:var(--prime-bg);border-color:var(--prime-border);"></span> Prime Contractor <span class="legend-count">(81)</span></div>
+  <div class="legend-item filterable" data-filter-key="sub" onclick="applyFilter('sub', this)"><span class="swatch" style="background:var(--sub-bg);border-color:var(--sub-border);"></span> Subcontractor <span class="legend-count">(9)</span></div>
+  <div class="legend-item filterable" data-filter-key="pt" onclick="applyFilter('pt', this)"><span class="tag">PT</span> Part Time <span class="legend-count">(4)</span></div>
+  <div class="legend-item filterable" data-filter-key="retired" onclick="applyFilter('retired', this)"><span class="tag">V</span> Veteran <span class="legend-count">(6)</span></div>
+  <div class="legend-item filterable" data-filter-key="waitingbi" onclick="applyFilter('waitingbi', this)"><span style="color:var(--waiting-bi); font-weight:bold;">Name</span> Waiting for Equipment <span class="legend-count">(3)</span></div>
+  <div class="legend-item filterable" data-filter-key="openposition" onclick="applyFilter('openposition', this)"><span style="color:var(--open-position); font-weight:bold;">Name</span> Open Position &ndash; Waiting to be Hired <span class="legend-count">(2)</span></div>
+  <div class="legend-item filterable" data-filter-key="remote" onclick="applyFilter('remote', this)"><span class="tag remote">R</span> Remote <span class="legend-count">(18)</span></div>
+  <div class="legend-item filterable legend-clear" onclick="clearFilter()">&times; Clear filter</div>
+</div>
+
+<div class="board">
+<div class="top-group">
+  <div class="top-group-header group-filterable" onclick="applyGroupFilter('topgroup', &quot;Operations Group&quot;, this)"><span class="group-title">Operations Group</span><span class="group-count-badge"><span class="count-prime">25</span> - <span class="count-sub">4</span></span></div>
+  <div class="top-group-body">
+<div class="sub-group">
+  <div class="sub-group-header group-filterable" onclick="applyGroupFilter('subgroup', &quot;Field Support&quot;, this)"><span class="group-title">Field Support</span><span class="group-count-badge"><span class="count-prime">17</span> - <span class="count-sub">4</span></span></div>
+  <div class="sub-group-columns">
+<div class="office-column">
+  <div class="office-header">
+    <div class="office-header-top">
+      <span class="office-count-badge"><span class="count-prime">10</span> - <span class="count-sub">2</span></span>
+    </div>
+    <div class="office-title">Mobile Support Unit (MSU)</div>
+    <div class="office-desc">Field mobile support operations</div>
+  </div>
+  <div class="office-list">
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Frankie Trent</span>
+        
+      </div>
+      <div class="person-role">Task Lead</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Cameron Abbott</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person subcontractor" data-prime="0" data-sub="1" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Greer Esparza</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      <div class="company-name">(BrightPath Consulting)</div>
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Finley Poole</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Jesse Cobb</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person subcontractor" data-prime="0" data-sub="1" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Jesse Vance</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      <div class="company-name">(Silverline Advisory)</div>
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Marlow Vance</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Avery Young</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      <div class="driver-trainer">Driver/Trainer</div>
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Jamie Young</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Marlow Gable</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Hayden Iverson</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Jules Reyna</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+  </div>
+</div>
+<div class="office-column">
+  <div class="office-header">
+    <div class="office-header-top">
+      <span class="office-count-badge"><span class="count-prime">7</span> - <span class="count-sub">2</span></span>
+    </div>
+    <div class="office-title">Equipment Tracking (EQT)</div>
+    <div class="office-desc">Equipment tracking and maintenance</div>
+  </div>
+  <div class="office-list">
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Charlie Kowalski</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Task Lead</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Dakota Frost</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Emerson Faulkner</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person subcontractor" data-prime="0" data-sub="1" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Greer Holt</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      <div class="company-name">(Silverline Advisory)</div>
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Quinn Stein</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Morgan Yancey</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Alex Zamora</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Avery Neri</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person subcontractor" data-prime="0" data-sub="1" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Field Support">
+      <div class="person-main">
+        <span class="person-name">Sage Iverson</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      <div class="company-name">(Silverline Advisory)</div>
+      
+    </div>
+  </div>
+</div>
+  </div>
+</div><div class="sub-group">
+  <div class="sub-group-header group-filterable" onclick="applyGroupFilter('subgroup', &quot;Logistics&quot;, this)"><span class="group-title">Logistics</span><span class="group-count-badge"><span class="count-prime">8</span> - <span class="count-sub">0</span></span></div>
+  <div class="sub-group-columns">
+<div class="office-column">
+  <div class="office-header">
+    <div class="office-header-top">
+      <span class="office-count-badge"><span class="count-prime">8</span> - <span class="count-sub">0</span></span>
+    </div>
+    <div class="office-title">Supply Chain Portal (SCP)</div>
+    <div class="office-desc">Supply chain coordination portal</div>
+  </div>
+  <div class="office-list">
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Logistics">
+      <div class="person-main">
+        <span class="person-name">Jamie Larkin</span>
+        
+      </div>
+      <div class="person-role">Task Lead</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Logistics">
+      <div class="person-main">
+        <span class="person-name">Hayden Orta</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Logistics">
+      <div class="person-main">
+        <span class="person-name">Alex Esparza</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Operations Group" data-subgroup="Logistics">
+      <div class="person-main">
+        <span class="person-name">Casey Quist</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Operations Group" data-subgroup="Logistics">
+      <div class="person-main">
+        <span class="person-name">Indigo Kowalski</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Logistics">
+      <div class="person-main">
+        <span class="person-name">Kendall Tovar</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="1" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Logistics">
+      <div class="person-main">
+        <span class="person-name">Morgan Pruitt</span>
+        <span class="tag retired">V</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="1" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Operations Group" data-subgroup="Logistics">
+      <div class="person-main">
+        <span class="person-name">Wren Ulrich</span>
+        <span class="tag pt">PT</span>
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="top-group">
+  <div class="top-group-header group-filterable" onclick="applyGroupFilter('topgroup', &quot;Technology Group&quot;, this)"><span class="group-title">Technology Group</span><span class="group-count-badge"><span class="count-prime">27</span> - <span class="count-sub">3</span></span></div>
+  <div class="top-group-body">
+<div class="sub-group">
+  <div class="sub-group-header group-filterable" onclick="applyGroupFilter('subgroup', &quot;Software Engineering&quot;, this)"><span class="group-title">Software Engineering</span><span class="group-count-badge"><span class="count-prime">18</span> - <span class="count-sub">3</span></span></div>
+  <div class="sub-group-columns">
+<div class="office-column">
+  <div class="office-header">
+    <div class="office-header-top">
+      <span class="office-count-badge"><span class="count-prime">9</span> - <span class="count-sub">2</span></span>
+    </div>
+    <div class="office-title">Customer Portal Redesign (CPR)</div>
+    <div class="office-desc">Customer-facing portal redesign</div>
+  </div>
+  <div class="office-list">
+    <div class="person waiting-bi" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="1" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Finley Monroe</span>
+        
+      </div>
+      <div class="person-role">Task Lead</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Elliot Orta</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person waiting-bi" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="1" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Emerson Lowe</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Indigo Whitfield</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Reese Esparza</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Casey Zeller</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="1" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Hayden Mills</span>
+        <span class="tag retired">V</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person subcontractor" data-prime="0" data-sub="1" data-pt="0" data-retired="1" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Devon Hendrix</span>
+        <span class="tag retired">V</span>
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      <div class="company-name">(Silverline Advisory)</div>
+      
+    </div>
+    <div class="person subcontractor" data-prime="0" data-sub="1" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Finley Cobb</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      <div class="company-name">(Silverline Advisory)</div>
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Indigo Brennan</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="1" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Eden Larkin</span>
+        <span class="tag retired">V</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+  </div>
+</div>
+<div class="office-column">
+  <div class="office-header">
+    <div class="office-header-top">
+      <span class="office-count-badge"><span class="count-prime">9</span> - <span class="count-sub">1</span></span>
+    </div>
+    <div class="office-title">Internal Tools Platform (ITP)</div>
+    <div class="office-desc">Internal tooling platform</div>
+  </div>
+  <div class="office-list">
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Greer Voss</span>
+        
+      </div>
+      <div class="person-role">Task Lead</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Indigo Guerra</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person subcontractor" data-prime="0" data-sub="1" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Rowan Neri</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      <div class="company-name">(BrightPath Consulting)</div>
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Lior Trent</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Presley Cobb</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Noel Jara</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Wren Dade</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="1" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Frankie Quist</span>
+        <span class="tag pt">PT</span><span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Avery Poole</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person waiting-bi" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="1" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Software Engineering">
+      <div class="person-main">
+        <span class="person-name">Skyler Brennan</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+  </div>
+</div>
+  </div>
+</div><div class="sub-group">
+  <div class="sub-group-header group-filterable" onclick="applyGroupFilter('subgroup', &quot;Data Analytics&quot;, this)"><span class="group-title">Data Analytics</span><span class="group-count-badge"><span class="count-prime">9</span> - <span class="count-sub">0</span></span></div>
+  <div class="sub-group-columns">
+<div class="office-column">
+  <div class="office-header">
+    <div class="office-header-top">
+      <span class="office-count-badge"><span class="count-prime">9</span> - <span class="count-sub">0</span></span>
+    </div>
+    <div class="office-title">Reporting Dashboard (RPD)</div>
+    <div class="office-desc">Enterprise reporting dashboard</div>
+  </div>
+  <div class="office-list">
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Data Analytics">
+      <div class="person-main">
+        <span class="person-name">Oakley Bishop</span>
+        
+      </div>
+      <div class="person-role">Task Lead</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Data Analytics">
+      <div class="person-main">
+        <span class="person-name">Remy Poole</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Data Analytics">
+      <div class="person-main">
+        <span class="person-name">Drew Ochoa</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Data Analytics">
+      <div class="person-main">
+        <span class="person-name">Quinn Ellis</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="1" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Data Analytics">
+      <div class="person-main">
+        <span class="person-name">Hayden Guerra</span>
+        <span class="tag retired">V</span>
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="1" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Data Analytics">
+      <div class="person-main">
+        <span class="person-name">Onyx Carr</span>
+        <span class="tag retired">V</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Data Analytics">
+      <div class="person-main">
+        <span class="person-name">Noel Trent</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Data Analytics">
+      <div class="person-main">
+        <span class="person-name">Parker Holt</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Technology Group" data-subgroup="Data Analytics">
+      <div class="person-main">
+        <span class="person-name">Casey Monroe</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="top-group">
+  <div class="top-group-header group-filterable" onclick="applyGroupFilter('topgroup', &quot;Client Services Group&quot;, this)"><span class="group-title">Client Services Group</span><span class="group-count-badge"><span class="count-prime">17</span> - <span class="count-sub">1</span></span></div>
+  <div class="top-group-body">
+<div class="sub-group">
+  <div class="sub-group-header group-filterable" onclick="applyGroupFilter('subgroup', &quot;Account Management&quot;, this)"><span class="group-title">Account Management</span><span class="group-count-badge"><span class="count-prime">17</span> - <span class="count-sub">1</span></span></div>
+  <div class="sub-group-columns">
+<div class="office-column">
+  <div class="office-header">
+    <div class="office-header-top">
+      <span class="office-count-badge"><span class="count-prime">10</span> - <span class="count-sub">0</span></span>
+    </div>
+    <div class="office-title">Client Onboarding (CLO)</div>
+    <div class="office-desc">New client onboarding workflow</div>
+  </div>
+  <div class="office-list">
+    <div class="person open-position" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="1" data-remote="0" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Sam Xu</span>
+        
+      </div>
+      <div class="person-role">Task Lead</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Remy Holt</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Eden Jonas</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Kendall Dade</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      <div class="driver-trainer">Driver/Trainer</div>
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Remy Orta</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Morgan Quist</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Morgan Tovar</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Nico Kowalski</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Nico Jonas</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person open-position" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="1" data-remote="0" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Taylor Neri</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+  </div>
+</div>
+<div class="office-column">
+  <div class="office-header">
+    <div class="office-header-top">
+      <span class="office-count-badge"><span class="count-prime">7</span> - <span class="count-sub">1</span></span>
+    </div>
+    <div class="office-title">Renewal Tracking (RNT)</div>
+    <div class="office-desc">Contract renewal tracking</div>
+  </div>
+  <div class="office-list">
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Riley Kowalski</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Task Lead</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Blair Tovar</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person subcontractor" data-prime="0" data-sub="1" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Jules Gable</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      <div class="company-name">(Silverline Advisory)</div>
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Jamie Kowalski</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Parker Monroe</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Frankie Orta</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Logan Duran</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Client Services Group" data-subgroup="Account Management">
+      <div class="person-main">
+        <span class="person-name">Lane Irwin</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="top-group">
+  <div class="top-group-header group-filterable" onclick="applyGroupFilter('topgroup', &quot;Strategy Group&quot;, this)"><span class="group-title">Strategy Group</span><span class="group-count-badge"><span class="count-prime">9</span> - <span class="count-sub">0</span></span></div>
+  <div class="top-group-body">
+<div class="sub-group">
+  <div class="sub-group-header group-filterable" onclick="applyGroupFilter('subgroup', &quot;Business Planning&quot;, this)"><span class="group-title">Business Planning</span><span class="group-count-badge"><span class="count-prime">9</span> - <span class="count-sub">0</span></span></div>
+  <div class="sub-group-columns">
+<div class="office-column">
+  <div class="office-header">
+    <div class="office-header-top">
+      <span class="office-count-badge"><span class="count-prime">9</span> - <span class="count-sub">0</span></span>
+    </div>
+    <div class="office-title">Market Research Initiative (MRI)</div>
+    <div class="office-desc">Market research and planning</div>
+  </div>
+  <div class="office-list">
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Strategy Group" data-subgroup="Business Planning">
+      <div class="person-main">
+        <span class="person-name">Parker Novak</span>
+        
+      </div>
+      <div class="person-role">Task Lead</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Strategy Group" data-subgroup="Business Planning">
+      <div class="person-main">
+        <span class="person-name">Kendall Hendrix</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="Strategy Group" data-subgroup="Business Planning">
+      <div class="person-main">
+        <span class="person-name">Morgan Poole</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Strategy Group" data-subgroup="Business Planning">
+      <div class="person-main">
+        <span class="person-name">Blair Duran</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Strategy Group" data-subgroup="Business Planning">
+      <div class="person-main">
+        <span class="person-name">Frankie Gable</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Strategy Group" data-subgroup="Business Planning">
+      <div class="person-main">
+        <span class="person-name">Kris Gable</span>
+        
+      </div>
+      <div class="person-role">Senior Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Strategy Group" data-subgroup="Business Planning">
+      <div class="person-main">
+        <span class="person-name">Jamie Zeller</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Strategy Group" data-subgroup="Business Planning">
+      <div class="person-main">
+        <span class="person-name">Tatum Young</span>
+        
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="1" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="Strategy Group" data-subgroup="Business Planning">
+      <div class="person-main">
+        <span class="person-name">Micah Trent</span>
+        <span class="tag pt">PT</span>
+      </div>
+      <div class="person-role">Analyst</div>
+      
+      
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+</div>
+
+<div class="sme-summary">
+  <div class="sme-summary-title">Subject Matter Experts (4)</div>
+  <div class="sme-list">
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="" data-subgroup="">
+      <div class="person-main">
+        <span class="person-name">Marlow Esparza</span>
+        
+      </div>
+      <div class="person-role">SME - Cybersecurity</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="1" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="" data-subgroup="">
+      <div class="person-main">
+        <span class="person-name">Finley Larkin</span>
+        <span class="tag pt">PT</span><span class="tag remote">R</span>
+      </div>
+      <div class="person-role">SME - Data Governance</div>
+      
+      
+    </div>
+    <div class="person" data-prime="1" data-sub="0" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="0" data-topgroup="" data-subgroup="">
+      <div class="person-main">
+        <span class="person-name">Taylor Zamora</span>
+        
+      </div>
+      <div class="person-role">SME - Cloud Architecture</div>
+      
+      
+    </div>
+    <div class="person subcontractor" data-prime="0" data-sub="1" data-pt="0" data-retired="0" data-waitingbi="0" data-openposition="0" data-remote="1" data-topgroup="" data-subgroup="">
+      <div class="person-main">
+        <span class="person-name">Jesse Quinlan</span>
+        <span class="tag remote">R</span>
+      </div>
+      <div class="person-role">SME - Process Improvement</div>
+      <div class="company-name">(Silverline Advisory)</div>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  var activeFilter = null;
+
+  function clearFilter() {
+    document.querySelectorAll('.person').forEach(function(el) {
+      el.classList.remove('dimmed');
+    });
+    document.querySelectorAll('.legend-item.filterable, .group-filterable').forEach(function(el) {
+      el.classList.remove('active');
+    });
+    activeFilter = null;
+  }
+
+  function applyFilter(key, el) {
+    var filterId = 'flag:' + key;
+    if (activeFilter === filterId) {
+      clearFilter();
+      return;
+    }
+    document.querySelectorAll('.legend-item.filterable, .group-filterable').forEach(function(e) {
+      e.classList.remove('active');
+    });
+    el.classList.add('active');
+    activeFilter = filterId;
+    document.querySelectorAll('.person').forEach(function(p) {
+      var match = p.getAttribute('data-' + key) === '1';
+      p.classList.toggle('dimmed', !match);
+    });
+  }
+
+  function applyGroupFilter(attr, value, el) {
+    var filterId = 'group:' + attr + ':' + value;
+    if (activeFilter === filterId) {
+      clearFilter();
+      return;
+    }
+    document.querySelectorAll('.legend-item.filterable, .group-filterable').forEach(function(e) {
+      e.classList.remove('active');
+    });
+    el.classList.add('active');
+    activeFilter = filterId;
+    document.querySelectorAll('.person').forEach(function(p) {
+      var match = p.getAttribute('data-' + attr) === value;
+      p.classList.toggle('dimmed', !match);
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -6,7 +6,7 @@ handles 3 people or 30 people in a column equally well — the column just
 gets taller.
 
 Reads: OrgChart_Data_Mockup.xlsx (sheet: OrgData)
-Writes: OrgChart_Roster.html
+Writes: v1.html (kept for comparison, no longer the live demo)
 """
 
 import csv
@@ -16,7 +16,7 @@ from datetime import datetime
 import json
 
 SOURCE_CSV = "OrgChart_Data.csv"
-OUTPUT_HTML = "OrgChart_Roster.html"
+OUTPUT_HTML = "v1.html"  # v1: card-column layout, kept for comparison
 
 # Columns that must be treated as numbers, not text — CSV gives everything
 # back as plain strings, so ID/ManagerID/SortOrder need explicit conversion
