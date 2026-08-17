@@ -2,6 +2,8 @@
 
 Turn a spreadsheet into a live, interactive staffing chart. No manual box-dragging required.
 
+**[Live Demo →](https://belabarbosa.github.io/org-chart-automation-pipeline/)**
+
 ## Why this exists
 
 The team's org chart used to be a hand-built diagram developed with Power Point: every new hire, departure, or role change meant manually dragging boxes, recoloring cells, and rechecking a legend by hand. It didn't scale. A team of 20+ people under one lead simply didn't fit the format, and leadership had no fast way to answer basic staffing questions ("how many positions are remote right now?") without counting boxes themselves.
